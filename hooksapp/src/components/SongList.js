@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import uuid from 'uuid/v1';
+import NewSongForm from './NewSongForm';
 
 const SongList = () => {
   /** Defines the state property for this Component.
@@ -12,9 +13,10 @@ const SongList = () => {
     { title: 'memory gospel', id: 2 },
     { title: 'this wild darkness', id: 3 }
   ]);
-  const addSong = () => {
+  /** Receives the title from NewSongForm Component, adds that to this Component's State. */
+  const addSong = (title) => {
     /** Replaces state data for this Component */
-    setSongs([...songs, { title: 'new song', id: uuid() }]);
+    setSongs([...songs, { title, id: uuid() }]);
   };
   return (
     <div className="song-list">
@@ -26,7 +28,8 @@ const SongList = () => {
           );
         })}
       </ul>
-      <button onClick={addSong}>Add a Song</button>
+      {/** Brings in the NewSongForm prop and passes the addSong method to it as a prop. */}
+      <NewSongForm addSong={addSong}/>
     </div>
   );
 };
