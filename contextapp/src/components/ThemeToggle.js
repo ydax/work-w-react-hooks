@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { ThemeContext } from "../contexts/ThemeContext";
 
 class ThemeToggle extends Component {
+    /** Consumes a context using the contextType approach. */
     static contextType = ThemeContext;
     render() { 
         const { toggleTheme } = this.context;
