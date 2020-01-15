@@ -1,27 +1,18 @@
-import React, { createContext, useState } from 'react';
-import uuid from 'uuid/v1';
+/** Imports the parent datasource for books from the reducer and instantiates methods for modifying it. Consumer Components will consume it using the useContext() method, destructuring what it needs to function in the left-hand side of the instantiation.  */
+
+import React, { createContext, useReducer } from 'react';
+import { bookReducer } from '../reducers/BookReducer';
 
 export const BookContext = createContext();
 
 const BookContextProvider = (props) => {
-    /** Stores data about books in this Component's state. */
-    const [books, setBooks] = useState([
-      { title: "name of the wind", author: "patrick rothfuss", id: 1 },
-      { title: "the final empire", author: "brandon sanderson", id: 2 }
-    ]);
-    /** Adds a new book to the state. */
-    const addBook = (title, author) => {
-        setBooks([...books, { title, author, id: uuid() }])
-    }
-    /** Removes a book from the state. */
-    const removeBook = (id) => {
-        /** Filters out the book with the matching id. */
-        setBooks(books.filter(book => book.id !== id));
-    }
+    /** Stores books and dispatch method in this Component's state. */
+    const [books, dispatch] = useReducer(bookReducer, []);
+    
     /** Returns Context Provider */
     return (
         /** Passes Context data and methods to consuming Components. */
-        <BookContext.Provider value= {{ books, addBook, removeBook }}>
+        <BookContext.Provider value= {{ books, dispatch }}>
             { props.children }
         </BookContext.Provider>
     )
